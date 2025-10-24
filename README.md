@@ -1,6 +1,6 @@
 # Graph Pyramid Pooling Transformer for Graph-level Representation Learning
 
-![GPPTans-viz](./fig/https://github.com/Frank-qlu/GPPTrans/blob/main/fig/GPPTrans.png)
+![GPPTans-viz](https://github.com/Frank-qlu/GPPTrans/blob/main/fig/GPPTrans.png)
 
 ### Python environment setup with Conda
 

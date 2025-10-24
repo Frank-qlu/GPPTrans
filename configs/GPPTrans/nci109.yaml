@@ -1,0 +1,54 @@
+out_dir: results
+accelerator: 'cuda:0'
+wandb:
+  use: True
+  project: GPPTrans-NCI109
+  entity: franktj
+dataset:
+  format: PyG-TUDataset
+  name: NCI109
+  task: graph
+  task_type: classification
+  transductive: False
+  split_mode: random
+  split_dir: test/splits
+  split_ratios: [0.8,0.1,0.1]
+  edge_encoder: True
+  edge_encoder_name: DummyEdge
+  edge_encoder_bn: False
+train:
+  batch_size: 128 
+  eval_period: 1
+  ckpt_period: 100
+  sampler: full_batch
+model:
+  type: GPPTransModel
+  loss_fun: cross_entropy
+  edge_decoding: dot
+  graph_pooling: add
+gnn:
+  layers_pre_mp: 1
+  layers_mp: 3
+  layers_post_mp: 1
+  dim_inner: 256
+  layer_type: gcnconv
+  stage_type: stack
+  batchnorm: True
+  act: prelu
+  dropout: 0.0
+  agg: mean
+  normalize_adj: False
+gt:  # Hyperparameters optimized for ~100k budget.
+  layer_type:  GIN+GPPTrans
+  layers: 4
+  n_heads: 4
+  dim_hidden: 256  # `gt.dim_hidden` must match `gnn.dim_inner`
+  dropout: 0.0
+  attn_dropout: 0.5
+  layer_norm: False
+  batch_norm: True 
+optim:
+  optimizer: adam
+  base_lr: 0.0001
+  max_epoch: 100
+  weight_decay: 1e-5
